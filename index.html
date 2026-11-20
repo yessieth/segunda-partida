@@ -6,39 +6,4 @@
 <header><h1>Segunda Partida</h1><a href="revista.pdf">Abrir PDF</a></header>
 <main><img id="hoja" src="pagina-1.jpg" alt="Portada de Segunda Partida"></main>
 <nav aria-label="Navegación de la revista"><button id="anterior" disabled>← Anterior</button><output id="contador" aria-live="polite">1 / 8</output><button id="siguiente">Siguiente →</button></nav>
-<script>
-const imagen = document.querySelector('#hoja');
-const anterior = document.querySelector('#anterior');
-const siguiente = document.querySelector('#siguiente');
-const contador = document.querySelector('#contador');
-let pagina = 1;
-function pasar(direccion) {
-  const destino = pagina + direccion;
-  if (destino < 1 || destino > 8) return;
-  pagina = destino;
-  imagen.src = 'pagina-' + pagina + '.jpg';
-  imagen.alt = 'Segunda Partida, página ' + pagina;
-  contador.textContent = pagina + ' / 8';
-  anterior.disabled = pagina === 1;
-  siguiente.disabled = pagina === 8;
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    imagen.style.transformOrigin = direccion > 0 ? 'left center' : 'right center';
-    imagen.animate([{transform:'rotateY(' + (direccion * 78) + 'deg)',filter:'brightness(.65)'},{transform:'rotateY(0deg)',filter:'brightness(1)'}],{duration:360,easing:'ease-out'});
-  }
-}
-anterior.onclick = () => pasar(-1);
-siguiente.onclick = () => pasar(1);
-document.addEventListener('keydown', evento => {
-  if (evento.key === 'ArrowRight') pasar(1);
-  if (evento.key === 'ArrowLeft') pasar(-1);
-});
-let inicio;
-imagen.addEventListener('touchstart', evento => {
-  inicio = evento.touches.length === 1 ? evento.touches[0].clientX : undefined;
-}, {passive:true});
-imagen.addEventListener('touchend', evento => {
-  const distancia = evento.changedTouches[0].clientX - inicio;
-  if (Math.abs(distancia) > 50) pasar(distancia < 0 ? 1 : -1);
-  inicio = undefined;
-}, {passive:true});
-</script></html>
+<script src="./revista-animada.js" defer></script>
