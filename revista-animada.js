@@ -1,5 +1,5 @@
 (() => {
-  const totalPaginas = 8;
+  const totalPaginas = 9;
   let paginaActual = 1;
   let pasandoPagina = false;
 
